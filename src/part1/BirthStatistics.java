@@ -20,6 +20,7 @@ public class BirthStatistics {
     private static final int RECORD_NAME_INDEX = 0;
     private static final int RECORD_GENDER_INDEX = 1;
     private static final int RECORD_NUM_BORN_INDEX = 2;
+    private static final String NO_NAME_ERROR = "NO NAME";
 
     public BirthStatistics(String pathCSVs) {
         pathToDirCSVs = pathCSVs;
@@ -92,12 +93,12 @@ public class BirthStatistics {
         SEFileUtil seFileUtil = new SEFileUtil(pathToCSV);
         CSVParser parser = seFileUtil.getCSVParser();
         List<CSVRecord> recordsList = parser.getRecords();
-        int malePopularNameRow = getCsvRowOfMostPopularNameByGender(year, MALE) - ONE;
+        int malePopularNameIndex = getCsvRowOfMostPopularNameByGender(year, MALE) - ONE;
         int loopStartValue = ZERO;  // Assume it's female
         if (gender.equals(MALE)) {  //
-            loopStartValue = malePopularNameRow;
+            loopStartValue = malePopularNameIndex;
         }
-        int loopStopValue = malePopularNameRow;
+        int loopStopValue = malePopularNameIndex;
         if (gender.equals(MALE)) {
             loopStopValue = recordsList.size();
         }
@@ -112,15 +113,40 @@ public class BirthStatistics {
         return namePopularity;
     }
 
+    public String getName(int year, int popularity, String gender) {
+        String pathToCSV = getPathToCSV(year);
+        SEFileUtil seFileUtil = new SEFileUtil(pathToCSV);
+        CSVParser parser = seFileUtil.getCSVParser();
+        List<CSVRecord> recordsList = parser.getRecords();
+        int malePopularNameIndex = getCsvRowOfMostPopularNameByGender(year, MALE) - ONE;
+        int indexShifting = -ONE;
+
+        boolean isPopularityInRange = popularity >= ROW_OF_FEMALE_POPULAR_NAME
+                && popularity <= malePopularNameIndex;
+        if (gender.equals(MALE)) {
+            isPopularityInRange = popularity+malePopularNameIndex > malePopularNameIndex && popularity+malePopularNameIndex <= recordsList.size();
+            indexShifting += malePopularNameIndex;
+        }
+        if (!isPopularityInRange) {
+            System.out.println(popularity > malePopularNameIndex);
+            System.out.println(popularity+malePopularNameIndex <= recordsList.size());
+            return NO_NAME_ERROR;
+        }
+
+        CSVRecord recordByPopularity = recordsList.get(popularity+indexShifting);
+        return recordByPopularity.get(RECORD_NAME_INDEX);
+
+    }
+
 
     public static void main(String[] args) {
 
         BirthStatistics birthStatistics = new BirthStatistics(args[0]);
 //        birthStatistics.totalBirths(2010);
-        int rank = birthStatistics.getRank(2012, "Mason", "M");
-        System.out.println("Rank is: " + rank);
-//        String name = birthStatistics.getName(2012, 10, "M");
-//        System.out.println("Name: " + name);
+//        int rank = birthStatistics.getRank(2012, "Mason", "M");
+//        System.out.println("Rank is: " + rank);
+        String name = birthStatistics.getName(2012, 10, "M");
+        System.out.println("Name: " + name);
 //        System.out.println(birthStatistics.yearOfHighestRank(1880, 2014,"David", "M"));
 //        System.out.println(birthStatistics.yearOfHighestRank(1880, 2014,"Jennifer", "F"));
 //        System.out.println(birthStatistics.getAverageRank(1880, 2014, "Benjamin", "M"));
