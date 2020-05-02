@@ -1,33 +1,34 @@
+package part2;
 
+public class Book {
 
-//public class Book {
-/*
     String title;
     boolean borrowed;
 
     //constructor
-    public Book (String bookTitle){
-        // Implement this method
+    public Book(String bookTitle) {
+        title = bookTitle;
+        borrowed = false;
     }
 
     //Marks the book as borrowed
-    public void borrowed(){
-        //Implement this method
+    public void borrowed() {
+        borrowed = true;
     }
 
     // Marks the book as available, i.e., not borrowed
-    public void returned(){
-        //Implement this method
+    public void returned() {
+        borrowed = false;
     }
 
     //Returns true if the book is borrowed, false otherwise
-    public boolean isBorrowed(){
-        //Implement this method
+    public boolean isBorrowed() {
+        return borrowed;
     }
 
     //Returns the title of the book
-    public String getTitle(){
-        //Implement this method
+    public String getTitle() {
+        return title;
     }
 
     public static void main(String[] args) {
@@ -40,6 +41,6 @@
         example.returned();
         System.out.println("Borrowed? (should be false:) " + example.isBorrowed());
     }
-    */
 
-//}
+
+}

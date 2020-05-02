@@ -1,5 +1,4 @@
-/*
-package main;
+package part2;
 
 public class Library {
     // Add the missing implementation to this class
@@ -50,5 +49,4 @@ public class Library {
         firstLibrary.printAvailableBooks();
     }
 }
-*/
 
