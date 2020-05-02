@@ -152,6 +152,25 @@ public class BirthStatistics {
     }
 
 
+    double getAverageRank(int startYear, int stopYear, String name, String gender) {
+        int ranksSum = ZERO;
+        int numberOfOccurrences = ZERO;
+
+
+        for (int currentYear = startYear; currentYear <= stopYear; currentYear++) {
+            int rank = getRank(currentYear, name, gender);
+            if (rank != NAME_NOT_FOUND_ERROR) {
+                numberOfOccurrences++;
+                ranksSum += rank;
+            }
+        }
+        double rankAverage = NAME_NOT_FOUND_ERROR;
+        if (numberOfOccurrences != ZERO) {
+            rankAverage = ((double) ranksSum) / numberOfOccurrences;
+        }
+        return rankAverage;
+    }
+
     public static void main(String[] args) {
 
         BirthStatistics birthStatistics = new BirthStatistics(args[0]);
@@ -160,10 +179,10 @@ public class BirthStatistics {
 //        System.out.println("Rank is: " + rank);
         //       String name = birthStatistics.getName(2012, 10, "M");
         //       System.out.println("Name: " + name);
-        System.out.println(birthStatistics.yearOfHighestRank(1880, 2014, "David", "M"));
-//        System.out.println(birthStatistics.yearOfHighestRank(1880, 2014,"Jennifer", "F"));
-//        System.out.println(birthStatistics.getAverageRank(1880, 2014, "Benjamin", "M"));
-//        System.out.println(birthStatistics.getAverageRank(1880,2014, "Lois", "F"));
+//        System.out.println(birthStatistics.yearOfHighestRank(1880, 2014, "David", "M"));
+//        System.out.println(birthStatistics.yearOfHighestRank(1880, 2014, "Jennifer", "F"));
+        System.out.println(birthStatistics.getAverageRank(1880, 2014, "Benjamin", "M"));
+        System.out.println(birthStatistics.getAverageRank(1880,2014, "Lois", "F"));
 //        System.out.println(birthStatistics.getTotalBirthsRankedHigher(2014, "Draco", "M"));
 //        System.out.print(birthStatistics.getTotalBirthsRankedHigher(2014, "Sophia", "F"));
 
