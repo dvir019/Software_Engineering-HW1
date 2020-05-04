@@ -5,32 +5,53 @@ public class Book {
     String title;
     boolean borrowed;
 
-    //constructor
+    /**
+     * The constructor of the class.
+     *
+     * @param bookTitle The title of the book
+     */
     public Book(String bookTitle) {
         title = bookTitle;
         borrowed = false;
     }
 
-    //Marks the book as borrowed
+    /**
+     * Marks the book as borrowed
+     */
     public void borrowed() {
         borrowed = true;
     }
 
-    // Marks the book as available, i.e., not borrowed
+    /**
+     * Marks the book as available
+     */
     public void returned() {
         borrowed = false;
     }
 
     //Returns true if the book is borrowed, false otherwise
+
+    /**
+     * Returns whether or not the book is borrowed.
+     *
+     * @return True if the book is borrowed, false otherwise
+     */
     public boolean isBorrowed() {
         return borrowed;
     }
 
-    //Returns the title of the book
+    /**
+     * Gets the title of the book
+     *
+     * @return The title of the book
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Tests the functions of the class.
+     */
     public static void main(String[] args) {
         //Small test on the Book class
         Book example = new Book("Harry Potter");

@@ -8,23 +8,44 @@ public class Library {
     private String address;
     private ArrayList<Book> books;
 
+    /**
+     * The constructor of the class.
+     *
+     * @param address The address of the library
+     */
     public Library(String address) {
         this.address = address;
         books = new ArrayList<Book>();
     }
 
+    /**
+     * Prints the opening hours of the libraries.
+     */
     public static void printOpeningHours() {
         System.out.println("Libraries are open daily from 9:00 to 17:00.");
     }
 
+    /**
+     * Adds a given book to the library.
+     *
+     * @param bookToAdd The book to add
+     */
     public void addBook(Book bookToAdd) {
         books.add(bookToAdd);
     }
 
+    /**
+     * Prints the address of the library.
+     */
     public void printAddress() {
         System.out.println(address);
     }
 
+    /**
+     * Tries to borrow a given book by his title, and prints the result.
+     *
+     * @param bookTitle The title of the book
+     */
     public void borrowBook(String bookTitle) {
         boolean isBookInCatalog=false;
 
@@ -44,6 +65,11 @@ public class Library {
         }
     }
 
+    /**
+     * Returns a given book by his title, and prints a message.
+     *
+     * @param bookTitle The title of the book
+     */
     public void returnBook(String bookTitle) {
         for (Book book : books) {
             if (book.getTitle().equals(bookTitle)) {
@@ -53,6 +79,9 @@ public class Library {
         }
     }
 
+    /**
+     * Prints the available books in the library.
+     */
     public void printAvailableBooks(){
         boolean noAvailableBooks = true;
 
@@ -68,7 +97,9 @@ public class Library {
         }
     }
 
-
+    /**
+     * Tests the functions of the class.
+     */
     public static void main(String[] args) {
         //Create two libraries
         Library firstLibrary = new Library("CS Faculty");
@@ -85,7 +116,7 @@ public class Library {
         printOpeningHours();
         System.out.println();
 
-        System.out.println("Library addresses: ");
+        System.out.println("Library addresses:");
         firstLibrary.printAddress();
         secondLibrary.printAddress();
         System.out.println();

@@ -62,6 +62,11 @@ public class BirthStatistics {
         return rank;
     }
 
+    /**
+     * Gets a year, and prints the number of males and females that was born in that year.
+     *
+     * @param year The year
+     */
     public void totalBirths(int year) {
         String pathToCSV = getPathToCSV(year);
         int femaleBirthCounter = ZERO;
@@ -88,6 +93,15 @@ public class BirthStatistics {
         System.out.println("male boys = " + maleBirthCounter);
     }
 
+    /**
+     * Gets year, a name and a gender, and returns the rank of the child in that year.
+     * If the child doesn't appear in that year, -1 will be returned.
+     *
+     * @param year The year
+     * @param name The name of the child
+     * @param gender The gender of the child
+     * @return The rank of the child in the given year
+     */
     public int getRank(int year, String name, String gender) {
         String pathToCSV = getPathToCSV(year);
         SEFileUtil seFileUtil = new SEFileUtil(pathToCSV);
@@ -113,6 +127,15 @@ public class BirthStatistics {
         return namePopularity;
     }
 
+    /**
+     * Gets a year, a rank and a gender, and returns the name of the child with that rank in that year.
+     * If the rank doesn't appear in that year, -1 will be returned.
+     *
+     * @param year The year
+     * @param popularity The rank of the child
+     * @param gender The gender of the child
+     * @return The name of the child with the given rank in the given year
+     */
     public String getName(int year, int popularity, String gender) {
         String pathToCSV = getPathToCSV(year);
         SEFileUtil seFileUtil = new SEFileUtil(pathToCSV);
@@ -137,6 +160,18 @@ public class BirthStatistics {
         return recordByPopularity.get(RECORD_NAME_INDEX);
     }
 
+    /**
+     * Gets two years, a name and a gender, and returns the year in which the rank of the child was the highest,
+     * in all of the years between the given two years.
+     * If the child doesn't appear in any year, -1 will be returned.
+     *
+     *
+     * @param startYear The first year
+     * @param stopYear The last year
+     * @param name The name of the child
+     * @param gender The gender of the child
+     * @return The year with the highest rank of the child
+     */
     int yearOfHighestRank(int startYear, int stopYear, String name, String gender) {
         int minPopularity = Integer.MAX_VALUE;
         int minPopularityYear = -ONE;
@@ -151,7 +186,18 @@ public class BirthStatistics {
         return minPopularityYear;
     }
 
-
+    /**
+     * Gets two years, a name and a gender, and returns the average rank of the child, in all of
+     * the years between the given two years.
+     * If the child doesn't appear in any year, -1 will be returned.
+     *
+     *
+     * @param startYear The first year
+     * @param stopYear The last year
+     * @param name The name of the child
+     * @param gender The gender of the child
+     * @return The average rank of the child
+     */
     double getAverageRank(int startYear, int stopYear, String name, String gender) {
         int ranksSum = ZERO;
         int numberOfOccurrences = ZERO;
@@ -171,6 +217,15 @@ public class BirthStatistics {
         return rankAverage;
     }
 
+    /**
+     * Gets a year, a name and a gender, and returns the number of births of children with higher
+     * rank then the rank of the given child.
+     *
+     * @param year The year
+     * @param name The name of the child
+     * @param gender The gender of the child
+     * @return The number of births of children with higher rank
+     */
     public int getTotalBirthsRankedHigher(int year, String name, String gender) {
         String pathToCSV = getPathToCSV(year);
         SEFileUtil seFileUtil = new SEFileUtil(pathToCSV);
@@ -199,24 +254,22 @@ public class BirthStatistics {
         return numberOfBorns;
     }
 
+    /**
+     * Tests the functions of the class.
+     */
     public static void main(String[] args) {
-
         BirthStatistics birthStatistics = new BirthStatistics(args[0]);
-//        birthStatistics.totalBirths(2010);
-//        int rank = birthStatistics.getRank(2012, "Mason", "M");
-//        System.out.println("Rank is: " + rank);
-        //       String name = birthStatistics.getName(2012, 10, "M");
-        //       System.out.println("Name: " + name);
-//        System.out.println(birthStatistics.yearOfHighestRank(1880, 2014, "David", "M"));
-//        System.out.println(birthStatistics.yearOfHighestRank(1880, 2014, "Jennifer", "F"));
-//        System.out.println(birthStatistics.getAverageRank(1880, 2014, "Benjamin", "M"));
-//        System.out.println(birthStatistics.getAverageRank(1880, 2014, "Lois", "F"));
- //       System.out.println(birthStatistics.getTotalBirthsRankedHigher(2010, "Zzyzx", "M"));
-       System.out.println(birthStatistics.getTotalBirthsRankedHigher(2014, "Draco", "M"));
-       System.out.print(birthStatistics.getTotalBirthsRankedHigher(2014, "Sophia", "F"));
-
-        //BirthStatistics b = new BirthStatistics(args[0]);
-        //System.out.print(b.getPathToCSV(1980));
+        birthStatistics.totalBirths(2010);
+        int rank = birthStatistics.getRank(2010, "Asher", "M");
+        System.out.println("Rank is: " + rank);
+        String name = birthStatistics.getName(2012, 10, "M");
+        System.out.println("Name: " + name);
+        System.out.println(birthStatistics.yearOfHighestRank(1880, 2014,"David", "M"));
+        System.out.println(birthStatistics.yearOfHighestRank(1880, 2014,"Jennifer", "F"));
+        System.out.println(birthStatistics.getAverageRank(1880, 2014, "Benjamin", "M"));
+        System.out.println(birthStatistics.getAverageRank(1880,2014, "Lois", "F"));
+        System.out.println(birthStatistics.getTotalBirthsRankedHigher(2014, "Draco", "M"));
+        System.out.println(birthStatistics.getTotalBirthsRankedHigher(2014, "Sophia", "F"));
     }
 
 
