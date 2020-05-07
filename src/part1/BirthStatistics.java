@@ -163,8 +163,6 @@ public class BirthStatistics {
             indexShifting += malePopularNameIndex;
         }
         if (!isRankInRange) {
-            System.out.println(rank > malePopularNameIndex);
-            System.out.println(rank + malePopularNameIndex <= recordsList.size());
             return NO_NAME_ERROR;
         }
 
