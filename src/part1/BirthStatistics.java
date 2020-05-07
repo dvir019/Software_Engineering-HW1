@@ -87,15 +87,13 @@ public class BirthStatistics {
      * @param year The year
      */
     public void totalBirths(int year) {
-        String pathToCSV = getPathToCSV(year);
+
         int femaleBirthCounter = ZERO;
         int maleBirthCounter = ZERO;
         int totalBirthCounter;
 
-        SEFileUtil seFileUtil = new SEFileUtil(pathToCSV);
-        CSVParser parser = seFileUtil.getCSVParser();
-
-        for (CSVRecord record : parser) {
+        List<CSVRecord> recordsList = getRecordsListByYear(year);
+        for (CSVRecord record : recordsList) {
             String gender = record.get(RECORD_GENDER_INDEX);
             int numBorn = Integer.parseInt(record.get(RECORD_NUM_BORN_INDEX));
             if (gender.equals(FEMALE)) {
