@@ -95,9 +95,9 @@ public class BirthStatistics {
         SEFileUtil seFileUtil = new SEFileUtil(pathToCSV);
         CSVParser parser = seFileUtil.getCSVParser();
 
-        for (CSVRecord rec : parser) {
-            String gender = rec.get(RECORD_GENDER_INDEX);
-            int numBorn = Integer.parseInt(rec.get(RECORD_NUM_BORN_INDEX));
+        for (CSVRecord record : parser) {
+            String gender = record.get(RECORD_GENDER_INDEX);
+            int numBorn = Integer.parseInt(record.get(RECORD_NUM_BORN_INDEX));
             if (gender.equals(FEMALE)) {
                 femaleBirthCounter += numBorn;
             } else {
