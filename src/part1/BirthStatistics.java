@@ -108,10 +108,7 @@ public class BirthStatistics {
      * @return The rank of the child in the given year
      */
     public int getRank(int year, String name, String gender) {
-        String pathToCSV = getPathToCSV(year);
-        SEFileUtil seFileUtil = new SEFileUtil(pathToCSV);
-        CSVParser parser = seFileUtil.getCSVParser();
-        List<CSVRecord> recordsList = parser.getRecords();
+        List<CSVRecord> recordsList = getRecordsListByYear(year);
         int malePopularNameIndex = getCsvRowOfMostPopularNameByGender(year, MALE) - ONE;
         int loopStartValue = ZERO;  // Assume it's female
         if (gender.equals(MALE)) {  //
@@ -142,10 +139,7 @@ public class BirthStatistics {
      * @return The name of the child with the given rank in the given year
      */
     public String getName(int year, int rank, String gender) {
-        String pathToCSV = getPathToCSV(year);
-        SEFileUtil seFileUtil = new SEFileUtil(pathToCSV);
-        CSVParser parser = seFileUtil.getCSVParser();
-        List<CSVRecord> recordsList = parser.getRecords();
+        List<CSVRecord> recordsList = getRecordsListByYear(year);
         int malePopularNameIndex = getCsvRowOfMostPopularNameByGender(year, MALE) - ONE;
         int indexShifting = -ONE;
 
@@ -231,10 +225,7 @@ public class BirthStatistics {
      * @return The number of births of children with higher rank
      */
     public int getTotalBirthsRankedHigher(int year, String name, String gender) {
-        String pathToCSV = getPathToCSV(year);
-        SEFileUtil seFileUtil = new SEFileUtil(pathToCSV);
-        CSVParser parser = seFileUtil.getCSVParser();
-        List<CSVRecord> recordsList = parser.getRecords();
+        List<CSVRecord> recordsList = getRecordsListByYear(year);
         int malePopularNameIndex = getCsvRowOfMostPopularNameByGender(year, MALE) - ONE;
         int nameRank = getRank(year, name, gender);
         int numberOfBorns = ZERO;
@@ -256,6 +247,14 @@ public class BirthStatistics {
         }
 
         return numberOfBorns;
+    }
+
+    private List<CSVRecord> getRecordsListByYear(int year) {
+        String pathToCSV = getPathToCSV(year);
+        SEFileUtil seFileUtil = new SEFileUtil(pathToCSV);
+        CSVParser parser = seFileUtil.getCSVParser();
+        List<CSVRecord> recordsList = parser.getRecords();
+        return recordsList;
     }
 
     /**
