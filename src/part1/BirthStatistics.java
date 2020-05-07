@@ -30,7 +30,9 @@ public class BirthStatistics {
     private static final int ZERO = 0;
     private static final int ONE = 1;
 
+
     // Constructor
+
     /**
      * The constructor of the class.
      *
@@ -39,6 +41,9 @@ public class BirthStatistics {
     public BirthStatistics(String pathCSVs) {
         pathToDirCSVs = pathCSVs;
     }
+
+
+    // Methods
 
     /**
      * This method returns the path to the CSV file of the specified year.
@@ -61,7 +66,7 @@ public class BirthStatistics {
      *
      * @param year   The year
      * @param gender The gender
-     * @return
+     * @return The row number in the CSV file of the most popular name by the given gender
      */
     private int getCsvRowOfMostPopularNameByGender(int year, String gender) {
         int rank = -1;
@@ -273,7 +278,7 @@ public class BirthStatistics {
     }
 
     /**
-     * Tests the functions of the class.
+     * Tests the methods of the class.
      *
      * @param args Command line arguments, contains the full path to the data folder
      */

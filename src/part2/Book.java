@@ -2,8 +2,12 @@ package part2;
 
 public class Book {
 
+    // Fields
     String title;
     boolean borrowed;
+
+
+    // Constructor
 
     /**
      * The constructor of the class.
@@ -14,6 +18,9 @@ public class Book {
         title = bookTitle;
         borrowed = false;
     }
+
+
+    // Methods
 
     /**
      * Marks the book as borrowed
@@ -50,7 +57,7 @@ public class Book {
     }
 
     /**
-     * Tests the functions of the class.
+     * Tests the methods of the class.
      */
     public static void main(String[] args) {
         //Small test on the Book class

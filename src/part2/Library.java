@@ -4,8 +4,12 @@ import java.util.ArrayList;
 
 public class Library {
 
+    // Fields
     private String address;
     private ArrayList<Book> books;
+
+
+    // Constructor
 
     /**
      * The constructor of the class.
@@ -16,6 +20,9 @@ public class Library {
         this.address = address;
         books = new ArrayList<Book>();
     }
+
+
+    // Methods
 
     /**
      * Prints the opening hours of the libraries.
@@ -97,7 +104,7 @@ public class Library {
     }
 
     /**
-     * Tests the functions of the class.
+     * Tests the methods of the class.
      */
     public static void main(String[] args) {
         //Create two libraries
