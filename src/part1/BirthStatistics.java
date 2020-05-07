@@ -22,15 +22,20 @@ public class BirthStatistics {
     private static final int RECORD_NUM_BORN_INDEX = 2;
     private static final String NO_NAME_ERROR = "NO NAME";
 
+    /**
+     * The constructor of the class.
+     *
+     * @param pathCSVs The path to the data folder
+     */
     public BirthStatistics(String pathCSVs) {
         pathToDirCSVs = pathCSVs;
     }
 
     /**
-     * This method returns the path to the CSV file of the specified year
+     * This method returns the path to the CSV file of the specified year.
      *
-     * @param year
-     * @return
+     * @param year The year
+     * @return The path to the CSV of the given year
      */
     private String getPathToCSV(int year) {
         File[] csvFiles = new File(pathToDirCSVs).listFiles();
@@ -43,10 +48,10 @@ public class BirthStatistics {
     }
 
     /**
-     * This method returns the row number in the CSV file of the most popular name by the given gender
+     * This method returns the row number in the CSV file of the most popular name by the given gender.
      *
-     * @param year
-     * @param gender
+     * @param year   The year
+     * @param gender The gender
      * @return
      */
     private int getCsvRowOfMostPopularNameByGender(int year, String gender) {
@@ -97,8 +102,8 @@ public class BirthStatistics {
      * Gets year, a name and a gender, and returns the rank of the child in that year.
      * If the child doesn't appear in that year, -1 will be returned.
      *
-     * @param year The year
-     * @param name The name of the child
+     * @param year   The year
+     * @param name   The name of the child
      * @param gender The gender of the child
      * @return The rank of the child in the given year
      */
@@ -116,27 +121,27 @@ public class BirthStatistics {
         if (gender.equals(MALE)) {
             loopStopValue = recordsList.size();
         }
-        int namePopularity = NAME_NOT_FOUND_ERROR;
+        int nameRank = NAME_NOT_FOUND_ERROR;
 
-        for (int i = loopStartValue; i < loopStopValue && namePopularity == NAME_NOT_FOUND_ERROR; i++) {
+        for (int i = loopStartValue; i < loopStopValue && nameRank == NAME_NOT_FOUND_ERROR; i++) {
             CSVRecord csvRecord = recordsList.get(i);
             if (csvRecord.get(RECORD_NAME_INDEX).equals(name)) {
-                namePopularity = i - loopStartValue + ONE;
+                nameRank = i - loopStartValue + ONE;
             }
         }
-        return namePopularity;
+        return nameRank;
     }
 
     /**
      * Gets a year, a rank and a gender, and returns the name of the child with that rank in that year.
      * If the rank doesn't appear in that year, -1 will be returned.
      *
-     * @param year The year
-     * @param popularity The rank of the child
+     * @param year   The year
+     * @param rank   The rank of the child
      * @param gender The gender of the child
      * @return The name of the child with the given rank in the given year
      */
-    public String getName(int year, int popularity, String gender) {
+    public String getName(int year, int rank, String gender) {
         String pathToCSV = getPathToCSV(year);
         SEFileUtil seFileUtil = new SEFileUtil(pathToCSV);
         CSVParser parser = seFileUtil.getCSVParser();
@@ -144,20 +149,21 @@ public class BirthStatistics {
         int malePopularNameIndex = getCsvRowOfMostPopularNameByGender(year, MALE) - ONE;
         int indexShifting = -ONE;
 
-        boolean isPopularityInRange = popularity >= ROW_OF_FEMALE_POPULAR_NAME
-                && popularity <= malePopularNameIndex;
+        boolean isRankInRange = rank >= ROW_OF_FEMALE_POPULAR_NAME
+                && rank <= malePopularNameIndex;
         if (gender.equals(MALE)) {
-            isPopularityInRange = popularity + malePopularNameIndex > malePopularNameIndex && popularity + malePopularNameIndex <= recordsList.size();
+            isRankInRange = rank + malePopularNameIndex > malePopularNameIndex &&
+                    rank + malePopularNameIndex <= recordsList.size();
             indexShifting += malePopularNameIndex;
         }
-        if (!isPopularityInRange) {
-            System.out.println(popularity > malePopularNameIndex);
-            System.out.println(popularity + malePopularNameIndex <= recordsList.size());
+        if (!isRankInRange) {
+            System.out.println(rank > malePopularNameIndex);
+            System.out.println(rank + malePopularNameIndex <= recordsList.size());
             return NO_NAME_ERROR;
         }
 
-        CSVRecord recordByPopularity = recordsList.get(popularity + indexShifting);
-        return recordByPopularity.get(RECORD_NAME_INDEX);
+        CSVRecord recordByRank = recordsList.get(rank + indexShifting);
+        return recordByRank.get(RECORD_NAME_INDEX);
     }
 
     /**
@@ -165,25 +171,24 @@ public class BirthStatistics {
      * in all of the years between the given two years.
      * If the child doesn't appear in any year, -1 will be returned.
      *
-     *
      * @param startYear The first year
-     * @param stopYear The last year
-     * @param name The name of the child
-     * @param gender The gender of the child
+     * @param stopYear  The last year
+     * @param name      The name of the child
+     * @param gender    The gender of the child
      * @return The year with the highest rank of the child
      */
     int yearOfHighestRank(int startYear, int stopYear, String name, String gender) {
-        int minPopularity = Integer.MAX_VALUE;
-        int minPopularityYear = -ONE;
+        int minRank = Integer.MAX_VALUE;
+        int minRankYear = -ONE;
 
         for (int currentYear = startYear; currentYear <= stopYear; currentYear++) {
-            int popularity = getRank(currentYear, name, gender);
-            if (popularity != NAME_NOT_FOUND_ERROR && popularity < minPopularity) {
-                minPopularity = popularity;
-                minPopularityYear = currentYear;
+            int rank = getRank(currentYear, name, gender);
+            if (rank != NAME_NOT_FOUND_ERROR && rank < minRank) {
+                minRank = rank;
+                minRankYear = currentYear;
             }
         }
-        return minPopularityYear;
+        return minRankYear;
     }
 
     /**
@@ -191,11 +196,10 @@ public class BirthStatistics {
      * the years between the given two years.
      * If the child doesn't appear in any year, -1 will be returned.
      *
-     *
      * @param startYear The first year
-     * @param stopYear The last year
-     * @param name The name of the child
-     * @param gender The gender of the child
+     * @param stopYear  The last year
+     * @param name      The name of the child
+     * @param gender    The gender of the child
      * @return The average rank of the child
      */
     double getAverageRank(int startYear, int stopYear, String name, String gender) {
@@ -221,8 +225,8 @@ public class BirthStatistics {
      * Gets a year, a name and a gender, and returns the number of births of children with higher
      * rank then the rank of the given child.
      *
-     * @param year The year
-     * @param name The name of the child
+     * @param year   The year
+     * @param name   The name of the child
      * @param gender The gender of the child
      * @return The number of births of children with higher rank
      */
@@ -233,7 +237,7 @@ public class BirthStatistics {
         List<CSVRecord> recordsList = parser.getRecords();
         int malePopularNameIndex = getCsvRowOfMostPopularNameByGender(year, MALE) - ONE;
         int nameRank = getRank(year, name, gender);
-        int numberOfBorns=ZERO;
+        int numberOfBorns = ZERO;
         int indexShifting = -ONE;
 
         int loopStartValue = ZERO;  // Assume it's female
@@ -246,9 +250,9 @@ public class BirthStatistics {
 
         loopStopValue += indexShifting;
 
-        for(int i=loopStartValue;i<loopStopValue;i++){
+        for (int i = loopStartValue; i < loopStopValue; i++) {
             CSVRecord csvRecord = recordsList.get(i);
-            numberOfBorns+=Integer.parseInt(csvRecord.get(RECORD_NUM_BORN_INDEX));
+            numberOfBorns += Integer.parseInt(csvRecord.get(RECORD_NUM_BORN_INDEX));
         }
 
         return numberOfBorns;
@@ -256,6 +260,8 @@ public class BirthStatistics {
 
     /**
      * Tests the functions of the class.
+     *
+     * @param args Command line arguments, contains the full path to the data folder
      */
     public static void main(String[] args) {
         BirthStatistics birthStatistics = new BirthStatistics(args[0]);
@@ -264,12 +270,13 @@ public class BirthStatistics {
         System.out.println("Rank is: " + rank);
         String name = birthStatistics.getName(2012, 10, "M");
         System.out.println("Name: " + name);
-        System.out.println(birthStatistics.yearOfHighestRank(1880, 2014,"David", "M"));
-        System.out.println(birthStatistics.yearOfHighestRank(1880, 2014,"Jennifer", "F"));
+        System.out.println(birthStatistics.yearOfHighestRank(1880, 2010, "David", "M"));
+        System.out.println(birthStatistics.yearOfHighestRank(1880, 2014, "Jennifer", "F"));
         System.out.println(birthStatistics.getAverageRank(1880, 2014, "Benjamin", "M"));
-        System.out.println(birthStatistics.getAverageRank(1880,2014, "Lois", "F"));
+        System.out.println(birthStatistics.getAverageRank(1880, 2014, "Lois", "F"));
         System.out.println(birthStatistics.getTotalBirthsRankedHigher(2014, "Draco", "M"));
-        System.out.println(birthStatistics.getTotalBirthsRankedHigher(2014, "Sophia", "F"));
+        System.out.print(birthStatistics.getTotalBirthsRankedHigher(2014, "Sophia", "F"));
+        System.out.println();
     }
 
 
