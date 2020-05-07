@@ -1,5 +1,10 @@
 package part2;
 
+/**
+ * Book
+ *
+ * The class for the first part of question number two.
+ */
 public class Book {
 
     // Fields

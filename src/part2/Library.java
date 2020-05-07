@@ -2,6 +2,11 @@ package part2;
 
 import java.util.ArrayList;
 
+/**
+ * Book
+ *
+ * The class for the second part of question number two.
+ */
 public class Library {
 
     // Fields

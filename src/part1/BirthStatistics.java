@@ -7,6 +7,11 @@ import csv.SEFileUtil;
 import java.io.File;
 import java.util.List;
 
+/**
+ * BirthStatistics
+ *
+ * The class for the question number one.
+ */
 public class BirthStatistics {
 
     // Fields
