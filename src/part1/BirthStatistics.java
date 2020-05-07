@@ -9,19 +9,28 @@ import java.util.List;
 
 public class BirthStatistics {
 
+    // Fields
     public final String pathToDirCSVs;
 
-    private static final int ZERO = 0;
-    private static final int ONE = 1;
+    // Constants - Genders
     private static final String FEMALE = "F";
     private static final String MALE = "M";
     private static final int ROW_OF_FEMALE_POPULAR_NAME = 1;
-    private static final int NAME_NOT_FOUND_ERROR = -1;
+
+    // Constants - Indexes
     private static final int RECORD_NAME_INDEX = 0;
     private static final int RECORD_GENDER_INDEX = 1;
     private static final int RECORD_NUM_BORN_INDEX = 2;
-    private static final String NO_NAME_ERROR = "NO NAME";
 
+    // Constants - Errors
+    private static final String NO_NAME_ERROR = "NO NAME";
+    private static final int NAME_NOT_FOUND_ERROR = -1;
+
+    // Constants - Numbers
+    private static final int ZERO = 0;
+    private static final int ONE = 1;
+
+    // Constructor
     /**
      * The constructor of the class.
      *
@@ -249,6 +258,12 @@ public class BirthStatistics {
         return numberOfBorns;
     }
 
+    /**
+     * Gets a year, and returns a list that contains all of the records from that year.
+     *
+     * @param year The year
+     * @return List of all records from the given year
+     */
     private List<CSVRecord> getRecordsListByYear(int year) {
         String pathToCSV = getPathToCSV(year);
         SEFileUtil seFileUtil = new SEFileUtil(pathToCSV);
