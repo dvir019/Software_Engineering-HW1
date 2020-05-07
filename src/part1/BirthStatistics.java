@@ -69,10 +69,10 @@ public class BirthStatistics {
      * @return The row number in the CSV file of the most popular name by the given gender
      */
     private int getCsvRowOfMostPopularNameByGender(int year, String gender) {
-        int rank = -1;
+        int rank = -ONE;
         SEFileUtil seFileUtil = new SEFileUtil(getPathToCSV(year));
         for (CSVRecord record : seFileUtil.getCSVParser()) {
-            String currGender = record.get(1);
+            String currGender = record.get(RECORD_GENDER_INDEX);
             if (currGender.equals(gender)) {
                 rank = (int) record.getRecordNumber();
                 break;
